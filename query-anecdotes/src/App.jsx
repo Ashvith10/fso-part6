@@ -21,16 +21,16 @@ const App = () => {
             : anecdote
         )
       )
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `you voted '${updatedAnecdote.content}'`
+      })
+      setTimeout(() => notificationDispatch({ type: 'CLEAR_NOTIFICATION' }), 5000)
     }
   })
 
   const handleVote = (anecdote) => {
     updateAnecdoteMutation.mutate(anecdote)
-    notificationDispatch({
-        type: 'SET_NOTIFICATION',
-        payload: `you voted '${anecdote.content}'`
-    })
-    setTimeout(() => notificationDispatch({ type: 'CLEAR_NOTIFICATION' }), 5000)
   }
   
   const result = useQuery({
