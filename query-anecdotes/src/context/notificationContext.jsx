@@ -5,7 +5,7 @@ const notificationReducer = (state, action) => {
     case "SET_NOTIFICATION":
       return action.payload
     case "CLEAR_NOTIFICATION":
-      return ''
+      return null
     default:
       return state
   }
@@ -21,6 +21,18 @@ export const NotificationContextProvider = (props) => {
       {props.children}
     </NotificationContext.Provider>
   )
+}
+
+export const useNotify = () => {
+  const [notification, notificationDispath] = useContext(NotificationContext)
+
+  return (message, time) => {
+    notificationDispath({
+      type: 'SET_NOTIFICATION',
+      payload: message
+    })
+    setTimeout(() => notificationDispath({ type: 'CLEAR_NOTIFICATION' }), time * 1000)
+  }
 }
 
 export default NotificationContext
